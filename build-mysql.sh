@@ -95,19 +95,21 @@ make
 sudo make install
 cd ..
 
-echo "Build gdal"
-echo "*****"
-echo ""
-mkdir "build-gdal"
-cd "build-gdal"
-cmake -DCMAKE_INSTALL_PREFIX='/usr' \
-      -DGDAL_USE_JASPER='OFF' \
-      -DGDAL_USE_MYSQL='OFF' \
-      -B . -S "../gdal-${_gdal_version}"
-make LD_LIBRARY_PATH="$(pwd)/../mysql-${_mysql_version}-build/usr/lib/" -j$(nproc)
-sudo make LD_LIBRARY_PATH="$(pwd)/../mysql-${_mysql_version}-build/usr/lib/" install
-sudo ln -s '.' "/usr/include/gdal"
-cd ..
+#echo "Build gdal"
+#echo "*****"
+#echo ""
+#mkdir "build-gdal"
+#cd "build-gdal"
+#cmake -DCMAKE_INSTALL_PREFIX='/usr' \
+#      -DGDAL_USE_JASPER='OFF' \
+#      -DGDAL_USE_MYSQL='OFF' \
+#      -B . -S "../gdal-${_gdal_version}"
+##make LD_LIBRARY_PATH="$(pwd)/../mysql-${_mysql_version}-build/usr/lib/" -j$(nproc)
+##sudo make LD_LIBRARY_PATH="$(pwd)/../mysql-${_mysql_version}-build/usr/lib/" install
+##sudo ln -s '.' "/usr/include/gdal"
+#make
+#sudo make install
+#cd ..
 
 echo "Build MySQL Workbench itself with bundled libs"
 echo "*****"
@@ -119,14 +121,14 @@ cmake "../mysql-workbench-community-${pkgver}-src" \
   -DCMAKE_INSTALL_PREFIX:PATH=/usr \
   -DCMAKE_CXX_FLAGS="${CXXFLAGS} -std=c++17 -fsigned-char" \
   -DCMAKE_BUILD_TYPE=Release \
-  -DMySQL_CONFIG_PATH="$(pwd)/../mysql-${_mysql_version}-build/usr/bin/mysql_config" \
-  -DMySQLCppConn_LIBRARY="$(pwd)/../mysql-connector-c++-${_connector_version}-src-build/usr/lib/libmysqlcppconn.so" \
-  -DMySQLCppConn_INCLUDE_DIR="$(pwd)/../mysql-connector-c++-${_connector_version}-src-build/usr/include/jdbc" \
-  -DGDAL_INCLUDE_DIR="$(pwd)/../mysql-${_mysql_version}-build/usr/include" \
-  -DGDAL_LIBRARY="$(pwd)/../mysql-${_mysql_version}-build/usr/lib/libgdal.so" \
-  -DUNIXODBC_CONFIG_PATH='/usr/bin/odbc_config' \
-  -DUSE_BUNDLED_MYSQLDUMP=1 \
-  -DWITH_ANTLR_JAR="/usr/share/java/antlr-${_antlr4_version}-complete.jar"
+#  -DMySQL_CONFIG_PATH="$(pwd)/../mysql-${_mysql_version}-build/usr/bin/mysql_config" \
+#  -DMySQLCppConn_LIBRARY="$(pwd)/../mysql-connector-c++-${_connector_version}-src-build/usr/lib/libmysqlcppconn.so" \
+#  -DMySQLCppConn_INCLUDE_DIR="$(pwd)/../mysql-connector-c++-${_connector_version}-src-build/usr/include/jdbc" \
+#  -DGDAL_INCLUDE_DIR="$(pwd)/../mysql-${_mysql_version}-build/usr/include" \
+#  -DGDAL_LIBRARY="$(pwd)/../mysql-${_mysql_version}-build/usr/lib/libgdal.so" \
+#  -DUNIXODBC_CONFIG_PATH='/usr/bin/odbc_config' \
+#  -DUSE_BUNDLED_MYSQLDUMP=1 \
+#  -DWITH_ANTLR_JAR="/usr/share/java/antlr-${_antlr4_version}-complete.jar"
 make
 sudo make install
 cd ..
